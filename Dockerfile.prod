@@ -1,0 +1,17 @@
+FROM node:alpine
+
+RUN apk add --no-cache libssl1.1
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . /app/
+
+RUN npm run generate
+
+EXPOSE 6000
+
+CMD ["npm", "run", "dev"]

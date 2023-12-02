@@ -1,0 +1,107 @@
+// This is the schema file,
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Student {
+  id             String           @id @default(uuid())
+  email          String           @unique
+  studentId      String           @unique
+  password       String
+  name           String?
+  contact        String?
+  code           String?
+  role           Roles            @default(student)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  status         UserStatus       @default(active)
+  programDate    DateTime         @default(now())
+  program        Program          @relation(fields: [programId], references: [id])
+  programId      String
+  school         School           @relation(fields: [schoolId], references: [id])
+  schoolId       String
+  StudentLibrary StudentLibrary[]
+}
+
+model StudentLibrary {
+  book        BookStore @relation(fields: [BookStoreId], references: [id])
+  BookStoreId String
+  student     Student   @relation(fields: [studentId], references: [id])
+  studentId   String
+  @@id([studentId, BookStoreId])
+}
+
+model BookStore {
+  id        String   @id @default(uuid())
+  name      String
+  pdf       String
+  price     Decimal  @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  StudentLibrary StudentLibrary[]
+}
+
+model Course {
+  id        String            @id @default(uuid())
+  name      String
+  pdf       String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  programs  ProgramToCourse[]
+}
+
+model Program {
+  id        String            @id @default(uuid())
+  name      String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  students  Student[]
+  courses   ProgramToCourse[]
+}
+
+model ProgramToCourse {
+  program   Program @relation(fields: [programId], references: [id])
+  programId String
+  course    Course  @relation(fields: [courseId], references: [id])
+  courseId  String
+
+  @@id([programId, courseId])
+}
+
+model School {
+  id                  String    @id @default(uuid())
+  name                String
+  region              String
+  category            String
+  city                String
+  yearOfEstablishment Int
+  students            Student[]
+}
+
+enum Roles {
+  superAdmin
+  Admin
+  student
+  photographer
+}
+
+enum Status {
+  active
+  defaulter
+}
+
+enum UserStatus {
+  active
+  inactive
+}
+
+enum DisbursementStatus {
+  active
+  inactive
+}
