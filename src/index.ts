@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import Debug from 'debug';
 import prisma from './extensions/prisma_ext';
 import server from './server';
-import QueueExt from './extensions/queues_ext';
+//import QueueExt from './extensions/queues_ext';
 import constants from './constants/constants';
 import myWorker from './worker';
 dotenv.config();
@@ -26,8 +26,8 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-    await QueueExt.AppQueue.close();
-    await QueueExt.SearchFacesQueue.close();
+    // await QueueExt.AppQueue.close();
+    // await QueueExt.SearchFacesQueue.close();
     await myWorker.TrainModelWorker.close();
     // await myWorker.SearchFacesWorker.close();
   });

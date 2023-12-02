@@ -8,7 +8,7 @@ import constants from "../../constants/constants";
 import { body } from "express-validator";
 import moment from "moment";
 //import redisConnect from '../../extensions/redis_ext';
-import QueueExt from "../../extensions/queues_ext";
+// import QueueExt from "../../extensions/queues_ext";
 import { Decimal } from "@prisma/client/runtime";
 import Uplaods from "../../helpers/cloudinary";
 import payments from "../../helpers/payment";
