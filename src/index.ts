@@ -4,7 +4,7 @@ import prisma from './extensions/prisma_ext';
 import server from './server';
 //import QueueExt from './extensions/queues_ext';
 import constants from './constants/constants';
-import myWorker from './worker';
+//import myWorker from './worker';
 dotenv.config();
 const port = parseInt(process.env.PORT || '5000', 10);
 
@@ -28,6 +28,6 @@ main()
     await prisma.$disconnect();
     // await QueueExt.AppQueue.close();
     // await QueueExt.SearchFacesQueue.close();
-    await myWorker.TrainModelWorker.close();
+   // await myWorker.TrainModelWorker.close();
     // await myWorker.SearchFacesWorker.close();
   });
