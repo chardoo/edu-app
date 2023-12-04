@@ -11,6 +11,7 @@ const uploader =  multer({ dest: "uploads/" } );
 const schoolRouter =  express.Router();
 schoolRouter.post('/createSchool',  schoolController.createSchool)
 
+schoolRouter.get('/get-all-school',  schoolController.getSchools)
 
 
 

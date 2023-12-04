@@ -51,7 +51,26 @@ const createSchool = async (
   }
 };
 
-export default {
+const getSchools = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+  
+    
+         const registerSchool = await prismaClient.school.findMany({
+        
+         select: { name: true, id:true, yearOfEstablishment:true, category:true }
+        });
+        return res.status(201).json({ registerSchool});
+    
+    } catch (error) {
+      return next(error);
+    }
+  };
 
+export default {
+    getSchools,
   createSchool,
 };
