@@ -33,14 +33,14 @@ const createSchool = async (
     //     await accessTokenUtils.generateUserAccessToken(
     //       password! as string
     //     );
-
+      var year = parseInt(yearOfEstablishment)
        const registerSchool = await prismaClient.school.create({
         data: {
          name,
          category,
          city,
          region,
-         yearOfEstablishment
+         yearOfEstablishment: year
         },
        select: { name: true,},
       });
