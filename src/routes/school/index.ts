@@ -1,5 +1,5 @@
 import express from 'express';
-import schoolController from '../../controllers/student/student_controller';
+import schoolController from '../../controllers/school/school_controller';
 import authMiddleware from '../../middlewares/authorization_middleware';
 import validateRequestWare from '../../middlewares/validate_request_middleware';
 import loginValidator from '../../validators/loginValidator'
@@ -9,7 +9,7 @@ import path from 'path';
 
 const uploader =  multer({ dest: "uploads/" } );
 const schoolRouter =  express.Router();
-schoolRouter.post('/createSchool',  schoolController.createStudentAccount)
+schoolRouter.post('/createSchool',  schoolController.createSchool)
 
 
 
