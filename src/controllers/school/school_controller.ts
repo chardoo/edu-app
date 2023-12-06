@@ -57,13 +57,20 @@ const getSchools = async (
     next: NextFunction
   ) => {
     try {
-  
-    
+        const {searchKey } = req.body;
+        console.log("hello are you are ");
+         console.log(searchKey);
          const registerSchool = await prismaClient.school.findMany({
+            where:{
+                
+                name:{contains: searchKey.trim()},
+
+        
+        },
         
          select: { name: true, id:true, yearOfEstablishment:true, category:true }
         });
-        return res.status(201).json({ registerSchool});
+        return res.status(200).json({ registerSchool});
     
     } catch (error) {
       return next(error);
