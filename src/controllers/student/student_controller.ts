@@ -83,7 +83,7 @@ const createStudentAccount = async (
           password! as string
         );
 
-       const registerStudent = await prismaClient.student.create({
+       const adminExists = await prismaClient.student.create({
         data: {
           programId,
           name: name,
@@ -91,15 +91,36 @@ const createStudentAccount = async (
           schoolId,
           programDate,
           role:"student",
-          code,
+          code:"3823823",
           studentId,
           contact,
           password: hashedToken,
 
         },
-       select: { email: true, password: true, name: true, contact: true },
+       select: {  id: true,
+        email: true,
+        password: true,
+        role: true,
+        name: true,
+        programId: true,},
       });
-      return res.status(201).json({  });
+
+      const { jwtToken, expiration } = generateJwtToken(
+        adminExists.email,
+        adminExists.id,
+        adminExists.role.toString()
+      );
+
+      return res.status(201).json({
+        id: adminExists.id,
+        email: adminExists.email,
+        role: adminExists.role,
+        name: adminExists.name,
+        programId: adminExists.programId,
+        token: jwtToken,
+        expiration,
+        isValid: true,
+      });
   
   } catch (error) {
     return next(error);
